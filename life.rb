@@ -6,7 +6,7 @@ class GameOfLife
 
     @@LIVE = 1
     @@DEAD = 0
-    @@SLEEP_TIME = 0.4
+    @@SLEEP_TIME = 0.1
 
     def initialize(rows=20, cols=20, initial_state_filepath=nil)
         if initial_state_filepath.nil?
