@@ -104,6 +104,8 @@ class LifeRenderer
             end
             puts
         end
+
+        print "\e[#{life_state.length}A"
     end
 end
 
