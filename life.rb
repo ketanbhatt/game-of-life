@@ -6,11 +6,17 @@ class GameOfLife
 
     @@LIVE = 1
     @@DEAD = 0
-    @@SLEEP_TIME = 0.2
+    @@SLEEP_TIME = 0.4
 
     def initialize(rows=20, cols=20, initial_state_filepath=nil)
-        @current_state = initialise_random_state(rows, cols)
-        @rows, @cols = rows, cols
+        if initial_state_filepath.nil?
+            @current_state = initialise_random_state(rows, cols)
+            @rows, @cols = rows, cols
+        else
+            @current_state = Array.new()
+            File.foreach(initial_state_filepath) { |line| @current_state.push(line.split("").map { |c| c.to_i }) }
+            @rows, @cols = @current_state.length, @current_state.first.length
+        end
     end
 
     def play!
@@ -115,8 +121,8 @@ if __FILE__ == $0
         life = GameOfLife.new()
         life.play!
     elsif ARGV.length == 1
-        puts "Starting from the state saved in file #{ARGV[0]}"
-        start_state = []
+        life = GameOfLife.new(nil, nil, initial_state_filepath=ARGV[0])
+        life.play!
     else
         puts "Sorry, the program can only take, at most, one argument."
     end
